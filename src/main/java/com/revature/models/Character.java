@@ -7,6 +7,7 @@ public abstract class Character {
 	private String passWord;
 	private String address;
 	private String email;
+	private String confirmPass;
 	private int requests;
 //	private boolean reimbursement;
 	private Reimbursement reimbursement;
@@ -156,6 +157,20 @@ public abstract class Character {
 		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the confirmPass
+	 */
+	public String getConfirmPass() {
+		return confirmPass;
+	}
+
+	/**
+	 * @param confirmPass the confirmPass to set
+	 */
+	public void setConfirmPass(String confirmPass) {
+		this.confirmPass = confirmPass;
 	}
 
 }

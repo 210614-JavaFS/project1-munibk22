@@ -3,7 +3,6 @@ package com.revature.daos;
 import java.util.List;
 
 import com.revature.models.Employee;
-import com.revature.models.Reimbursement;
 
 public interface EmployeeDAO {
 
@@ -11,8 +10,11 @@ public interface EmployeeDAO {
 
 	public Employee findByName(String name);
 
+	public Employee findByUserName(String userName);
 	public boolean updateReimbursement(Employee employee);
 
 	public boolean addEmployee(Employee employee);
+	
+	
 
 }

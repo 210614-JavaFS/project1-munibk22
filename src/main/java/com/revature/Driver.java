@@ -13,24 +13,26 @@ public class Driver {
 	private static EmployeeController empController = new EmployeeController();
 
 	public static void main(String[] args) {
+		System.out.println("****Welcome To The Expense Reimbursement System****\n");
+//		empController.showAllEmployees();
 
 		driverController();
 
 	}
 
 	private static void driverController() {
-		System.out.println("****Welcome To The Expense Reimbursement System****\n");
+
 		String response = "a";
 
 		while (!response.equals("3")) {
-			System.err.println("What would you like to do next?");
+			System.out.println("What would you like to do next?");
 			System.out.println("1.Login as an employee to submit requests for reimbursement \n"
 					+ "2.Login as finance manager to view all reimbursement requests \n" + "3.Exit program ");
 			response = scan.nextLine();
 			if (response.equals("1")) {
+//				empController.empLoginController();
+				System.err.println("\n***Welcome to Employee Login Menu***");
 				empController.empLoginController();
-
-				empController.empMenuController();
 			} else if (response.equals("2")) {
 
 			} else if (response.equals("3")) {

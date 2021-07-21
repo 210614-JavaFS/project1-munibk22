@@ -1,6 +1,7 @@
 package com.revature.daos;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,11 +11,63 @@ import com.revature.models.Employee;
 import com.revature.utils.ConnectionUtil;
 
 public class EmployeeDaoImpl implements EmployeeDAO {
+	
+	@Override
+	public Employee findByUserName(String userName) {
+		String sql = "SELECT * FROM employees WHERE user_name = ?";
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userName);
+			ResultSet result = statement.executeQuery();
+
+			Employee employee = new Employee();
+			while (result.next()) {
+				employee.setEmpId(result.getInt("emp_id"));
+				employee.setFirstName(result.getString("first_name"));
+				employee.setLastName(result.getString("last_name"));
+				employee.setUserName(result.getString("user_name"));
+				employee.setEmail(result.getString("email"));
+				employee.setPassword(result.getString("password"));
+
+			}
+			return employee;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
 
 	@Override
 	public Employee findByName(String name) {
-		// TODO Auto-generated method stub
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "SELECT * FROM employees WHERE first_name = ?";
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(1, name);
+			ResultSet result = statement.executeQuery();
+
+			Employee employee = new Employee();
+
+			while (result.next()) {
+				employee.setEmpId(result.getInt("emp_id"));
+				employee.setFirstName(result.getString("first_name"));
+				employee.setLastName(result.getString("last_name"));
+				employee.setUserName(result.getString("user_name"));
+				employee.setEmail(result.getString("email"));
+				employee.setPassword(result.getString("password"));
+
+			}
+			return employee;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return null;
+
 	}
 
 	@Override
@@ -25,7 +78,25 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
 	@Override
 	public boolean addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		String sql = "INSERT INTO employees(FIRST_NAME,LAST_NAME,USER_NAME,EMAIL,password)" + "VALUES(?,?,?,?,?) ";
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			int index = 0;
+			statement.setString(++index, employee.getFirstName());
+			statement.setString(++index, employee.getLastName());
+			statement.setString(++index, employee.getUserName());
+			statement.setString(++index, employee.getEmail());
+			statement.setString(++index, employee.getPassword());
+
+			statement.execute();
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return false;
 	}
 
@@ -44,7 +115,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 				Employee employee = new Employee();
 				employee.setEmpId(result.getInt("emp_id"));
 				employee.setFirstName(result.getString("first_name"));
-				employee.setLastName(result.getString("lastName"));
+				employee.setLastName(result.getString("last_name"));
 				employee.setUserName(result.getString("user_name"));
 				employee.setEmail(result.getString("email"));
 				employee.setPassword(result.getString("password"));

@@ -11,6 +11,18 @@ public class EmployeeService {
 
 	public List<Employee> getAllEmployees() {
 
-		return (empDao.findAll());
+		return empDao.findAll();
 	};
+
+	public Employee getByName(String name) {
+		return empDao.findByName(name);
+	}
+
+	public boolean addEmployee(Employee employee) {
+		return empDao.addEmployee(employee);
+	}
+
+	public Employee getByUserName(String userName) {
+		return empDao.findByUserName(userName);
+	}
 }
