@@ -2,7 +2,7 @@ package com.revature.models;
 
 public class Employee extends Character {
 	int empId;
-	private String firstName;
+//	private String firstName;
 	private String lastName;
 	private String userName;
 	private String email;
@@ -11,7 +11,7 @@ public class Employee extends Character {
 	public Employee(int empId, String firstName, String lastName, String userName, String email, String password) {
 		super();
 		this.empId = empId;
-		this.firstName = firstName;
+		this.setFirstName(firstName);
 		this.lastName = lastName;
 		this.userName = userName;
 		this.email = email;
@@ -26,9 +26,9 @@ public class Employee extends Character {
 		return empId;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
+//	public String getFirstName() {
+//		return firstName;
+//	}
 
 	public String getLastName() {
 		return lastName;
@@ -50,9 +50,9 @@ public class Employee extends Character {
 		this.empId = empId;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+//	public void setFirstName(String firstName) {
+//		this.firstName = firstName;
+//	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -72,8 +72,8 @@ public class Employee extends Character {
 
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
-				+ userName + ", email=" + email + ", password=" + password + "]";
+		return "Employee [empId=" + empId + ", firstName=" + this.getFirstName() + ", lastName=" + lastName
+				+ ", userName=" + userName + ", email=" + email + ", password=" + password + "]";
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class Employee extends Character {
 		int result = super.hashCode();
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + empId;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((this.getFirstName() == null) ? 0 : this.getFirstName().hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
@@ -105,10 +105,10 @@ public class Employee extends Character {
 			return false;
 		if (empId != other.empId)
 			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
+		if (this.getFirstName() == null) {
+			if (other.getFirstName() != null)
 				return false;
-		} else if (!firstName.equals(other.firstName))
+		} else if (!this.getFirstName().equals(other.getFirstName()))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)

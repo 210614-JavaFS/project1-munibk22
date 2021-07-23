@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Employee;
+import com.revature.models.ReimbursementType;
 import com.revature.utils.ConnectionUtil;
 
 public class EmployeeDaoImpl implements EmployeeDAO {
-	
+
 	@Override
 	public Employee findByUserName(String userName) {
 		String sql = "SELECT * FROM employees WHERE user_name = ?";
@@ -127,6 +128,12 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean addTicket(String amountScan, ReimbursementType reimbursementType) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

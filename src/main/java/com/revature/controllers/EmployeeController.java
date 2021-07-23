@@ -54,7 +54,7 @@ public class EmployeeController {
 			String response = scan.nextLine();
 			switch (response) {
 			case "1":
-				Reimbursement reimbursement = ReimbursementController.reimbursementMenuController(employee);
+				employee = ReimbursementController.reimbursementMenuController(employee);
 				break;
 			case "2":
 

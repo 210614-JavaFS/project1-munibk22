@@ -22,19 +22,18 @@ public class Driver {
 
 	private static void driverController() {
 
-		String response = "a";
+		String response = "";
 
 		while (!response.equals("3")) {
-			System.out.println("What would you like to do next?");
+			System.out.println("What would you like to do today?");
 			System.out.println("1.Login as an employee to submit requests for reimbursement \n"
 					+ "2.Login as finance manager to view all reimbursement requests \n" + "3.Exit program ");
 			response = scan.nextLine();
 			if (response.equals("1")) {
-//				empController.empLoginController();
 				System.err.println("\n***Welcome to Employee Login Menu***");
 				empController.empLoginController();
 			} else if (response.equals("2")) {
-
+				System.err.println("\n***Welcome to Manager Login Menu***");
 			} else if (response.equals("3")) {
 				System.exit(0);
 			} else {
@@ -48,3 +47,5 @@ public class Driver {
 	}
 
 }
+
+//--MDC.put("name","1");

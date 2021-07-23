@@ -1,5 +1,10 @@
 package com.revature.models;
 
+import java.sql.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class Character {
 	private String firstName;
 	private String lastName;
@@ -11,6 +16,12 @@ public abstract class Character {
 	private int requests;
 //	private boolean reimbursement;
 	private Reimbursement reimbursement;
+	private boolean isLoggedIn = false;
+	private boolean isActive = false;
+	private boolean isRegistered = false;
+	private String timeStamp;
+	private Date dateCreated;
+//	private static Logger log = LoggerFactory.getLogger(Character.class);
 
 	// No arg Constructor
 	public Character() {
@@ -19,7 +30,7 @@ public abstract class Character {
 
 	// Args Constructor
 	public Character(String firstName, String lastName, String userName, String passWord, String address, int requests,
-			boolean reimbursement) {
+			Reimbursement reimbursement) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -27,10 +38,52 @@ public abstract class Character {
 		this.passWord = passWord;
 		this.address = address;
 		this.requests = requests;
+		this.reimbursement = reimbursement;
 
 	}
 
 	// Getters N Setters
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public boolean isRegistered() {
+		return isRegistered;
+	}
+
+	public String getTimeStamp() {
+		return timeStamp;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public void setRegistered(boolean isRegistered) {
+		this.isRegistered = isRegistered;
+	}
+
+	public void setTimeStamp(String timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
 	public String getEmail() {
 		return email;
 	}
