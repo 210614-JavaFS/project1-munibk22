@@ -16,16 +16,16 @@ public class SuccessServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
 
-		res.setContentType("text/html");
+		res.setContentType("aapliction/json");
 		PrintWriter pw = res.getWriter();
 
 		if (session == null) {
 			pw.print("<h1>You are not Logged In!!</h1>");
 		} else {
-			String username = (String) session.getAttribute("username");
+//			String username = (String) session.getAttribute("username");
 
 //			String username = req.getParameter("userId");
-			pw.print("<h2>Welcome " + username + ", you have successfully logged in!</h2>");
+			pw.print("<h2>Welcome, you have successfully logged in!</h2>");
 
 			pw.print("<a href='logout'>Click here to logout!</a>");
 		}

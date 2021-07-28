@@ -12,13 +12,13 @@ public class Driver {
 	private static Logger log = LoggerFactory.getLogger(Driver.class);
 	private static EmployeeController empController = new EmployeeController();
 
-	public static void main(String[] args) {
-		System.out.println("****Welcome To The Expense Reimbursement System****\n");
-//		empController.showAllEmployees();
-
-		driverController();
-
-	}
+//	public static void main(String[] args) {
+//		System.out.println("****Welcome To The Expense Reimbursement System****\n");
+////		empController.showAllEmployees();
+//
+//		driverController();
+//
+//	}
 
 	private static void driverController() {
 
@@ -31,7 +31,7 @@ public class Driver {
 			response = scan.nextLine();
 			if (response.equals("1")) {
 				System.err.println("\n***Welcome to Employee Login Menu***");
-				empController.empLoginController();
+//				empController.empLoginController();
 			} else if (response.equals("2")) {
 				System.err.println("\n***Welcome to Manager Login Menu***");
 			} else if (response.equals("3")) {

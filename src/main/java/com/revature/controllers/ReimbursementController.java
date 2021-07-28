@@ -38,7 +38,7 @@ public class ReimbursementController {
 			System.out.println("You must choose tpye of reimburment from list. Please try again.");
 			employee = newTicketBuilder(employee);
 		}
-		empService.createNewTicket(amountScan, reimbursementType);
+//		empService.createNewTicket(amountScan, reimbursementType);
 		return null;
 	}
 

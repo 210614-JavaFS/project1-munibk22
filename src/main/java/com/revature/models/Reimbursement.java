@@ -4,31 +4,74 @@ import java.awt.image.BufferedImage;
 import java.sql.Date;
 
 public class Reimbursement {
+	private int amount;
+	private String rDescription;
+	private int author;
+	private int resolver;
+	private int rStatus;
+	private int reimbursementId;
+	private String img;
 
+	private byte[] imgHolder;
 	private String pastTickets;
 	private String pendingRequests;
 	private ReimbursementType rType;
-	private boolean rStatus;
-	private int amount;
+
 	private boolean rSubmitted;
 	private boolean rResolved;
-	private String rDescription;
-	private int reimbursementId;
+
 	private String timeStamp;
 
 	private Date dateCreated;
 
 	BufferedImage image = null;
 
-	public Reimbursement(String pastTickets, String pendingRequests, ReimbursementType rType) {
+	public Reimbursement() {
 		super();
-		this.pastTickets = pastTickets;
-		this.pendingRequests = pendingRequests;
+	}
+
+	public int getrStatus() {
+		return rStatus;
+	}
+
+	public byte[] getImg() {
+		return img.getBytes();
+	}
+
+	public byte[] getImgHolder() {
+		return imgHolder;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public void setImgHolder(byte[] imgHolder) {
+		this.imgHolder = imgHolder;
+	}
+
+	public ReimbursementType getrType() {
+		return rType;
+	}
+
+	public int getAuthor() {
+		return author;
+	}
+
+	public int getResolver() {
+		return resolver;
+	}
+
+	public void setrType(ReimbursementType rType) {
 		this.rType = rType;
 	}
 
-	public Reimbursement() {
-		super();
+	public void setAuthor(int author) {
+		this.author = author;
+	}
+
+	public void setResolver(int resolver) {
+		this.resolver = resolver;
 	}
 
 	public String getTimeStamp() {
@@ -71,7 +114,7 @@ public class Reimbursement {
 		this.rType = type;
 	}
 
-	public boolean isrStatus() {
+	public int isrStatus() {
 		return rStatus;
 	}
 
@@ -99,7 +142,7 @@ public class Reimbursement {
 		return image;
 	}
 
-	public void setrStatus(boolean rStatus) {
+	public void setrStatus(int rStatus) {
 		this.rStatus = rStatus;
 	}
 

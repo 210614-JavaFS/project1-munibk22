@@ -6,22 +6,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class Character {
+	int empId;
+	private String userName;
 	private String firstName;
 	private String lastName;
-	private String userName;
-	private String passWord;
-	private String address;
 	private String email;
-	private String confirmPass;
+	private int userRoleId;
+//	private String confirmPass;
 	private int requests;
 //	private boolean reimbursement;
 	private Reimbursement reimbursement;
-	private boolean isLoggedIn = false;
-	private boolean isActive = false;
-	private boolean isRegistered = false;
-	private String timeStamp;
-	private Date dateCreated;
-//	private static Logger log = LoggerFactory.getLogger(Character.class);
+
+//	private String timeStamp;
+//	private Date dateCreated;
+
+	private String password;
+	private String passConfirm;
 
 	// No arg Constructor
 	public Character() {
@@ -29,75 +29,22 @@ public abstract class Character {
 	}
 
 	// Args Constructor
-	public Character(String firstName, String lastName, String userName, String passWord, String address, int requests,
-			Reimbursement reimbursement) {
+	public Character(int empId, String userName, String firstName, String lastName, String password) {
 		super();
+		this.empId = empId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
-		this.passWord = passWord;
-		this.address = address;
-		this.requests = requests;
-		this.reimbursement = reimbursement;
+		this.password = password;
 
 	}
 
-	// Getters N Setters
-
-	public boolean isLoggedIn() {
-		return isLoggedIn;
+	public int getEmpId() {
+		return empId;
 	}
 
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public boolean isRegistered() {
-		return isRegistered;
-	}
-
-	public String getTimeStamp() {
-		return timeStamp;
-	}
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setLoggedIn(boolean isLoggedIn) {
-		this.isLoggedIn = isLoggedIn;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public void setRegistered(boolean isRegistered) {
-		this.isRegistered = isRegistered;
-	}
-
-	public void setTimeStamp(String timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public Reimbursement getReimbursement() {
-		return reimbursement;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setReimbursement(Reimbursement reimbursement) {
-		this.reimbursement = reimbursement;
+	public String getUserName() {
+		return userName;
 	}
 
 	public String getFirstName() {
@@ -108,20 +55,28 @@ public abstract class Character {
 		return lastName;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getEmail() {
+		return email;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public int getUserRoleId() {
+		return userRoleId;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getPassword() {
+		return password;
 	}
 
-	public int getRequests() {
-		return requests;
+	public String getPassConfirm() {
+		return passConfirm;
+	}
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -132,42 +87,36 @@ public abstract class Character {
 		this.lastName = lastName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public void setUserRoleId(int userRoleId) {
+		this.userRoleId = userRoleId;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setRequests(int requests) {
-		this.requests = requests;
+	public void setPassConfirm(String passConfirm) {
+		this.passConfirm = passConfirm;
 	}
 
-	// toString
-
-	@Override
-	public String toString() {
-		return "Character [firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName + ", passWord="
-				+ passWord + ", address=" + address + ", requests=" + requests + ", reimbursement=" + reimbursement
-				+ "]";
-	}
-
-	// hascode N equals
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + empId;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((passWord == null) ? 0 : passWord.hashCode());
+		result = prime * result + ((passConfirm == null) ? 0 : passConfirm.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((reimbursement == null) ? 0 : reimbursement.hashCode());
 		result = prime * result + requests;
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + userRoleId;
 		return result;
 	}
 
@@ -180,10 +129,12 @@ public abstract class Character {
 		if (getClass() != obj.getClass())
 			return false;
 		Character other = (Character) obj;
-		if (address == null) {
-			if (other.address != null)
+		if (email == null) {
+			if (other.email != null)
 				return false;
-		} else if (!address.equals(other.address))
+		} else if (!email.equals(other.email))
+			return false;
+		if (empId != other.empId)
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
@@ -195,12 +146,20 @@ public abstract class Character {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (passWord == null) {
-			if (other.passWord != null)
+		if (passConfirm == null) {
+			if (other.passConfirm != null)
 				return false;
-		} else if (!passWord.equals(other.passWord))
+		} else if (!passConfirm.equals(other.passConfirm))
 			return false;
-		if (reimbursement != other.reimbursement)
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (reimbursement == null) {
+			if (other.reimbursement != null)
+				return false;
+		} else if (!reimbursement.equals(other.reimbursement))
 			return false;
 		if (requests != other.requests)
 			return false;
@@ -209,21 +168,17 @@ public abstract class Character {
 				return false;
 		} else if (!userName.equals(other.userName))
 			return false;
+		if (userRoleId != other.userRoleId)
+			return false;
 		return true;
 	}
 
-	/**
-	 * @return the confirmPass
-	 */
-	public String getConfirmPass() {
-		return confirmPass;
+	@Override
+	public String toString() {
+		return "Character [empId=" + empId + ", userName=" + userName + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId + ", password=" + password + "]";
 	}
 
-	/**
-	 * @param confirmPass the confirmPass to set
-	 */
-	public void setConfirmPass(String confirmPass) {
-		this.confirmPass = confirmPass;
-	}
+	// Getters N Setters
 
 }
