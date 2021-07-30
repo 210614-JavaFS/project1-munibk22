@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class FrontControllerServlet extends HttpServlet {
 	private static EmployeeController employeeController = new EmployeeController();
+	private static ReimbursementController reimbursementController = new ReimbursementController(); 
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -54,7 +55,15 @@ public class FrontControllerServlet extends HttpServlet {
 		case "login":
 			employeeController.login(request, response);
 			break;
-		
+		case "pasttickets":
+			reimbursementController.pasttickets(request,response);
+			break;
+		case "pending":
+			reimbursementController.pendingRequests(request,response);
+		break;
+		case "approvals":
+		reimbursementController.approvalRequests(request,response);
+		break;
 		}
 
 	}

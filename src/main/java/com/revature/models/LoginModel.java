@@ -1,7 +1,7 @@
 package com.revature.models;
 
 public class LoginModel {
-private String userName;
+protected String userName;
 private String password;
 
 

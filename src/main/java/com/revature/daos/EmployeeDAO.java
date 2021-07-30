@@ -27,4 +27,6 @@ public interface EmployeeDAO {
 
 	public List<Reimbursement> findAllReimbursements();
 
+//	boolean getImage();
+
 }

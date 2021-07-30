@@ -6,22 +6,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class Character {
-	int empId;
+	
+//	public  int empId;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private int userRoleId;
 //	private String confirmPass;
-	private int requests;
-//	private boolean reimbursement;
+
 	private Reimbursement reimbursement;
 
 //	private String timeStamp;
-//	private Date dateCreated;
+
 
 	private String password;
-	private String passConfirm;
+
 
 	// No arg Constructor
 	public Character() {
@@ -29,19 +29,18 @@ public abstract class Character {
 	}
 
 	// Args Constructor
-	public Character(int empId, String userName, String firstName, String lastName, String password) {
+	public Character(String userName, String firstName, String lastName, String password) {
 		super();
-		this.empId = empId;
-		this.firstName = firstName;
+				this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
 
 	}
 
-	public int getEmpId() {
-		return empId;
-	}
+//	public int getEmpId() {
+//		return empId;
+//	}
 
 	public String getUserName() {
 		return userName;
@@ -67,13 +66,13 @@ public abstract class Character {
 		return password;
 	}
 
-	public String getPassConfirm() {
-		return passConfirm;
-	}
+//	public String getPassConfirm() {
+//		return passConfirm;
+//	}
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
-	}
+//	public void setEmpId(int empId) {
+//		this.empId = empId;
+//	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -99,8 +98,16 @@ public abstract class Character {
 		this.password = password;
 	}
 
-	public void setPassConfirm(String passConfirm) {
-		this.passConfirm = passConfirm;
+//	public void setPassConfirm(String passConfirm) {
+//		this.passConfirm = passConfirm;
+//	}
+
+	
+
+	@Override
+	public String toString() {
+		return "Character [ userName=" + userName + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId + ", password=" + password + "]";
 	}
 
 	@Override
@@ -108,13 +115,10 @@ public abstract class Character {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + empId;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((passConfirm == null) ? 0 : passConfirm.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((reimbursement == null) ? 0 : reimbursement.hashCode());
-		result = prime * result + requests;
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result + userRoleId;
 		return result;
@@ -134,8 +138,6 @@ public abstract class Character {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (empId != other.empId)
-			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
@@ -145,11 +147,6 @@ public abstract class Character {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (passConfirm == null) {
-			if (other.passConfirm != null)
-				return false;
-		} else if (!passConfirm.equals(other.passConfirm))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -161,8 +158,6 @@ public abstract class Character {
 				return false;
 		} else if (!reimbursement.equals(other.reimbursement))
 			return false;
-		if (requests != other.requests)
-			return false;
 		if (userName == null) {
 			if (other.userName != null)
 				return false;
@@ -173,11 +168,8 @@ public abstract class Character {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Character [empId=" + empId + ", userName=" + userName + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId + ", password=" + password + "]";
-	}
+
+
 
 	// Getters N Setters
 

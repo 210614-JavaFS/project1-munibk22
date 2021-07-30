@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,12 +31,12 @@ public class EmployeeController {
 	private Scanner scan = new Scanner(System.in);
 	private Logger log = LoggerFactory.getLogger(EmployeeController.class);
 	private static ObjectMapper objectMapper = new ObjectMapper();
-//	public static Employee employee = new Employee();
 	private boolean loggedIn = false;
 	private HttpSession session;
+//	public  Employee employee = new Employee();
 
 	public void showAllEmployees(HttpServletResponse response) throws IOException {
-//		ObjectMapper objectMapper = new ObjectMapper();
+
 		List<Employee> employeeList = empService.getAllEmployees();
 
 		String json = objectMapper.writeValueAsString(employeeList);
@@ -50,10 +49,7 @@ public class EmployeeController {
 	}
 
 	public boolean login(HttpServletRequest req, HttpServletResponse response) throws IOException, ServletException {
-		String userPw = req.getParameter("userName");
-		System.out.println(userPw);
-		System.out.println(req.getParameter("userName"));
-
+	
 		BufferedReader reader = req.getReader();
 		StringBuilder stringBuilder = new StringBuilder();
 
@@ -67,12 +63,13 @@ public class EmployeeController {
 
 		LoginModel loginModel = objectMapper.readValue(body, LoginModel.class);
 
-		Employee employee2 = empService.getByUserName(loginModel.getUserName());
+		Employee employee = empService.getByUserName(loginModel.getUserName());
 
-		String json = objectMapper.writeValueAsString(employee2);
+		String json = objectMapper.writeValueAsString(employee);
 		PrintWriter pw = response.getWriter();
 
-		System.out.println(employee2.getFirstName());
+		System.out.println("employee.getEmpId() =" +employee.getEmpId2());
+		System.out.println(employee);
 		response.getWriter().print(json);
 		System.out.println(body);
 		
@@ -81,11 +78,11 @@ public class EmployeeController {
 
 		try {
 
-			if (employee2.getFirstName() != null && employee2.getPassword().equals(loginModel.getPassword())) {
+			if (employee.getFirstName() != null && employee.getPassword().equals(loginModel.getPassword())) {
 				response.setStatus(200);
 				session = req.getSession();
-				session.setAttribute("username", employee2.getUserName());
-				log.info(employee2.getUserName()+" was logged in");
+				session.setAttribute("username", employee.getUserName());
+				log.info(employee.getUserName()+" was logged in");
 				System.out.println("new session started");
 ;
 
@@ -117,10 +114,17 @@ public class EmployeeController {
 			line = reader.readLine();
 		}
 		String body = new String(stringBuilder);
-		Employee employee = objectMapper.readValue(body, Employee.class);
+		Employee employee2 = objectMapper.readValue(body, Employee.class);			
+					
+				PrintWriter pw = response.getWriter();
 
-		if (empService.addEmployee(employee)) {
+					
+		if (empService.addEmployee(employee2)) {
 			response.setStatus(201);
+			String json = objectMapper.writeValueAsString(employee2);			
+//			PrinterWriter pw = response.getWriter();
+			pw.print(json);
+			
 			return true;
 		} else {
 			response.setStatus(406);

@@ -1,45 +1,81 @@
 package com.revature.controllers;
 
-import java.util.Scanner;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
+import com.revature.models.LoginModel;
 import com.revature.models.Reimbursement;
-import com.revature.models.ReimbursementType;
-import com.revature.services.EmployeeService;
 
-public class ReimbursementController {
-	private static Scanner scan = new Scanner(System.in);
+import com.revature.services.EmployeeService;
+import com.revature.services.ReimbursementService;
+
+public class ReimbursementController extends Employee {
+
 	private static Logger log = LoggerFactory.getLogger(ReimbursementController.class);
 	private static EmployeeService empService = new EmployeeService();
-//	private ReimbursementType type = new ReimbursementType();
 
-	public static Employee reimbursementMenuController(Employee employee) {
-		employee = newTicketBuilder(employee);
-		return employee;
-	}
+	private ObjectMapper objectMapper= new ObjectMapper();
+	private ReimbursementService reimbService = new ReimbursementService();
 
-	private static Employee newTicketBuilder(Employee employee) {
-		System.out.println("What is the reimbursement amount?");
-		String amountScan = scan.nextLine();
 
-		System.out.println(
-				"What is your reimbursement type? \n" + "1.LODGING \n" + "2.TRAVEL \n" + "3.FOOD \n" + "4.OTHER");
-		String typeScan = scan.nextLine().toUpperCase();
-
-		ReimbursementType reimbursementType = null;
-		try {
-			reimbursementType = ReimbursementType.valueOf(typeScan);
-		} catch (IllegalArgumentException e) {
-			log.warn("User attempted to create a type that does not exist");
-			log.warn(e.getMessage());
-			System.out.println("You must choose tpye of reimburment from list. Please try again.");
-			employee = newTicketBuilder(employee);
+	public void pasttickets(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+		List<Reimbursement> reimbursementList = reimbService.getPastTickets();
+		System.out.println("getEmpId 2="+ Employee.empId );
+		
+		System.out.println("getEmpId 2="+ empId );
+		
+		System.out.println("pasttickets connected!!");
+//		System.out.println("employee.getEmpId() " +employee.getEmpId());
+		String json = objectMapper.writeValueAsString(reimbursementList);
+		
+		System.out.println(json);
+		PrintWriter pw = response.getWriter();
+		pw.print(json);
+		
+		if(reimbService.getPastTickets() != null) {
+			response.setStatus(200);
+			log.info("Employee requested past tickets");
+		}else {
+			log.warn("Could not retrieve past tickets");
 		}
-//		empService.createNewTicket(amountScan, reimbursementType);
-		return null;
+		
 	}
 
+
+	public void pendingRequests(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+		List<Reimbursement> pendingList= reimbService.gettAllPending();
+		String json = objectMapper.writeValueAsString(pendingList);
+
+		
+		System.out.println(json);
+		PrintWriter pw = response.getWriter();
+		pw.print(json);
+
+		response.setStatus(200);
+		
+		
+		
+	}
+
+
+	public void approvalRequests(HttpServletRequest request, HttpServletResponse response) {
+		log.info("Retriving Approval data from Database");
+		List<Reimbursement> rList=reimbService.findAllApprovals();
+		
+	}
+
+	
 }

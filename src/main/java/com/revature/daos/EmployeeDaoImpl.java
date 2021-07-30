@@ -97,11 +97,36 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		}
 
 	}
+	
+//	@Override	
+//	public boolean getImage() {
+		
+//try(Connection conn=ConnectionUtil.getConnection()) {
+//	PreparedStatement ps = conn.prepareStatement("SELECT image FROM IMAGEHOLDER WHERE imageid=1");
+//	ps.setString(1, "myimage.jpg");
+//	ResultSet rs = ps.executeQuery();
+//	if (rs != null) {
+//	    while(rs.next()) {
+//	        byte[] imgBytes = rs.getBytes(1);
+//	       
+//	    }
+//	    rs.close();
+//	}
+//	ps.close();
+//	
+//} catch (Exception e) {
+//	// TODO: handle exception
+//}
+//		return false;
+//	
+//		
+//	}
+	
 
 	@Override
 	public boolean addEmployee(Employee employee) {
 		String sql = "INSERT INTO ers_users(USER_NAME,FIRST_NAME,LAST_NAME,EMAIL, password)"
-				+ "VALUES(?,?,?,?,crypt(?, gen_salt('bf')) ";
+				+ "VALUES(?,?,?,?,?) ";
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -125,10 +150,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
 	@Override
 	public boolean addTicket(Reimbursement reimbursement) {
-		String sql = "INSERT INTO ers_reimbursement(reimb_amount, reimb_description, reimb_author,reimb_resolver,"
-				+ "reimb_type_id, reimb_reciept)" + "values(?,?,?,?,?,?)";
+		String sql = "INSERT INTO ers_reimbursement(reimb_amount, reimb_description, reimb_author,"
+				+ "reimb_type_id, reimb_reciept)" + "values(?,?,?,?,?)";
 
-//		String sql = "INSERT INTO ers_reimbursement(reimb_amount,reimb_author) VALUES(?,?)";
+
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -136,10 +161,9 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
 			statement.setInt(++index, reimbursement.getAmount());
 			statement.setString(++index, reimbursement.getrDescription());
-			statement.setInt(++index, reimbursement.getAuthor());
-			statement.setInt(++index, reimbursement.getResolver());
+			statement.setInt(++index, reimbursement.getAuthor());		
 			statement.setInt(++index, reimbursement.getReimbursementId());
-			statement.setBytes(++index, reimbursement.getImg());
+			statement.setBytes(++index, reimbursement.getImgHolder());
 
 			statement.execute();
 			return true;
@@ -168,6 +192,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 				employee.setLastName(result.getString("last_name"));
 				employee.setUserName(result.getString("user_name"));
 				employee.setEmail(result.getString("email"));
+				employee.setUserRoleId(result.getInt("user_role_id"));
 				employee.setPassword(result.getString("password"));
 				empList.add(employee);
 
@@ -190,20 +215,19 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
 			List<Reimbursement> reimbList = new ArrayList<>();
 
-			Reimbursement reimbursement=new Reimbursement();
+			
 			while (result.next()) {
+						 
+				Reimbursement reimbursement=new Reimbursement();
 				
-				reimbursement.setReimbursementId(result.getInt("reimb_id"));
+				reimbursement.setReimbursementId(result.getInt("reimb_id"));				
 				reimbursement.setAmount(result.getInt("reimb_amount"));
 				reimbursement.setrDescription(result.getString("reimb_description"));
 				reimbursement.setImgHolder(result.getBytes("reimb_reciept"));
-//				reimbursement
-//				reimbursement
-//				reimbursement
-//				reimbursement
-//				reimbursement
-//				reimbursement
-//				reimbursement
+				reimbursement.setAmount(result.getInt("reimb_author"));
+				reimbursement.setResolver(result.getInt("reimb_resolver"));
+				reimbursement.setrStatus(result.getInt("reimb_status_id"));
+				reimbursement.setrIntType(result.getInt("reimb_type_id"));
 				
 				reimbList.add(reimbursement);
 
