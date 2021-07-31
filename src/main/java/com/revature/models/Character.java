@@ -14,6 +14,7 @@ public abstract class Character {
 	private String email;
 	private int userRoleId;
 //	private String confirmPass;
+private String userRole;
 
 	private Reimbursement reimbursement;
 
@@ -107,8 +108,9 @@ public abstract class Character {
 	@Override
 	public String toString() {
 		return "Character [ userName=" + userName + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId + ", password=" + password + "]";
+				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId +userRole+ ", password=" + password + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -120,6 +122,7 @@ public abstract class Character {
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((reimbursement == null) ? 0 : reimbursement.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
 		result = prime * result + userRoleId;
 		return result;
 	}
@@ -163,9 +166,28 @@ public abstract class Character {
 				return false;
 		} else if (!userName.equals(other.userName))
 			return false;
+		if (userRole == null) {
+			if (other.userRole != null)
+				return false;
+		} else if (!userRole.equals(other.userRole))
+			return false;
 		if (userRoleId != other.userRoleId)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the userRole
+	 */
+	public String getUserRole() {
+		return userRole;
+	}
+
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 
 

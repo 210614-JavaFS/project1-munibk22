@@ -12,4 +12,8 @@ public interface ReimbursementDAO {
 
 	public List<Reimbursement> findAllApprovals();
 
+	public boolean approveStatus(int rId);
+
+	boolean denyStatus(int rId);
+
 }

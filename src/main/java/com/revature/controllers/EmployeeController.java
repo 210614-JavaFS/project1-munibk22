@@ -135,7 +135,7 @@ public class EmployeeController {
 
 	public boolean addTicket(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-
+System.out.println("Adding ticket");
 		BufferedReader reader = request.getReader();
 		StringBuilder stringBuilder = new StringBuilder();
 
@@ -150,9 +150,11 @@ public class EmployeeController {
 		System.out.println(reimbursement);
 		if (empService.addTicket(reimbursement)) {
 			response.setStatus(201);
+			log.info("Successfully added reimbursement");
 			return true;
 		} else {
 			response.setStatus(406);
+			log.warn("Could not add reimbursement");
 			return false;
 		}
 	}
@@ -188,18 +190,6 @@ public class EmployeeController {
 
 	}
 
-	public void getReimbursements(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException, JsonProcessingException {
-		List<Reimbursement> reimbursementList = empService.getAllReimbursements();
 
-		String json = objectMapper.writeValueAsString(reimbursementList);
-
-		System.out.println(json);
-		PrintWriter pw = response.getWriter();
-		pw.print(json);
-
-		response.setStatus(200);
-
-	}
 
 }

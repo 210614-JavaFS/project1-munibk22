@@ -24,4 +24,14 @@ public class ReimbursementService {
 		return reimbDao.findAllApprovals();
 	}
 
+	public boolean approveStatus(int rId) {
+		
+		return reimbDao.approveStatus(rId) ;
+	}
+
+	public boolean denyStatus(int rId) {
+	
+		return reimbDao.denyStatus(rId);
+	}
+
 }

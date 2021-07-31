@@ -13,11 +13,15 @@ import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementType;
 import com.revature.utils.ConnectionUtil;
 
-public class EmployeeDaoImpl implements EmployeeDAO {
+public class EmployeeDaoImpl extends Employee implements EmployeeDAO {
 
 	@Override
 	public Employee findByUserName(String userName) {
-		String sql = "SELECT * FROM ers_users WHERE user_name = ?";
+		String sql = "SELECT u.* , roles.user_role \n"
+				+ "FROM ers_users u \n"
+				+ "JOIN ers_user_roles roles \n"
+				+ "ON u.user_role_id = roles.ers_user_role_id \n" 
+				+ "WHERE user_name = ?";
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -32,7 +36,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 				employee.setUserName(result.getString("user_name"));
 				employee.setEmail(result.getString("email"));
 				employee.setPassword(result.getString("password"));
-
+				employee.setUserRole(result.getString("user_role"));
 			}
 			return employee;
 
@@ -97,10 +101,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		}
 
 	}
-	
+
 //	@Override	
 //	public boolean getImage() {
-		
+
 //try(Connection conn=ConnectionUtil.getConnection()) {
 //	PreparedStatement ps = conn.prepareStatement("SELECT image FROM IMAGEHOLDER WHERE imageid=1");
 //	ps.setString(1, "myimage.jpg");
@@ -121,12 +125,10 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 //	
 //		
 //	}
-	
 
 	@Override
 	public boolean addEmployee(Employee employee) {
-		String sql = "INSERT INTO ers_users(USER_NAME,FIRST_NAME,LAST_NAME,EMAIL, password)"
-				+ "VALUES(?,?,?,?,?) ";
+		String sql = "INSERT INTO ers_users(USER_NAME,FIRST_NAME,LAST_NAME,EMAIL, password)" + "VALUES(?,?,?,?,?) ";
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -153,15 +155,13 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		String sql = "INSERT INTO ers_reimbursement(reimb_amount, reimb_description, reimb_author,"
 				+ "reimb_type_id, reimb_reciept)" + "values(?,?,?,?,?)";
 
-
-
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			int index = 0;
 
 			statement.setInt(++index, reimbursement.getAmount());
 			statement.setString(++index, reimbursement.getrDescription());
-			statement.setInt(++index, reimbursement.getAuthor());		
+			statement.setInt(++index, getEmpId2());
 			statement.setInt(++index, reimbursement.getReimbursementId());
 			statement.setBytes(++index, reimbursement.getImgHolder());
 
@@ -203,11 +203,14 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		}
 		return null;
 	}
-	
+
 	@Override
-	public List<Reimbursement> findAllReimbursements(){
+	public List<Reimbursement> findAllReimbursements() {
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "SELECT * FROM ERS_REIMBURSEMENT";
+			String sql = "SELECT r.reimb_submitted, to_char(reimb_submitted ,'MON-DD-YY') ,r.*, u.*, \n"
+					+ "s.reimb_status, u.user_name, u.emp_id \n" + "FROM ERS_REIMBURSEMENT r \n" + "JOIN ers_users u \n"
+					+ "ON r.reimb_author=u.emp_id \n" + "JOIN ers_reimbursement_status s \n"
+					+ "ON r.reimb_status_id = s.reimb_status_id \n" + "WHERE r.reimb_status_id != 2";
 
 			Statement statement = conn.createStatement();
 
@@ -215,20 +218,21 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
 			List<Reimbursement> reimbList = new ArrayList<>();
 
-			
 			while (result.next()) {
-						 
-				Reimbursement reimbursement=new Reimbursement();
-				
-				reimbursement.setReimbursementId(result.getInt("reimb_id"));				
+
+				Reimbursement reimbursement = new Reimbursement();
+
+				reimbursement.setReimbursementId(result.getInt("reimb_id"));
 				reimbursement.setAmount(result.getInt("reimb_amount"));
 				reimbursement.setrDescription(result.getString("reimb_description"));
-				reimbursement.setImgHolder(result.getBytes("reimb_reciept"));
 				reimbursement.setAmount(result.getInt("reimb_author"));
 				reimbursement.setResolver(result.getInt("reimb_resolver"));
-				reimbursement.setrStatus(result.getInt("reimb_status_id"));
-				reimbursement.setrIntType(result.getInt("reimb_type_id"));
-				
+				reimbursement.setStatus(result.getString("reimb_status"));
+//				reimbursement.setrIntType(result.getInt("reimb_type_id"));
+				reimbursement.setDateCreated(result.getString("reimb_submitted"));
+
+				reimbursement.setUserName(result.getString("user_name"));
+
 				reimbList.add(reimbursement);
 
 			}
@@ -236,9 +240,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		return null;				
+
+		return null;
 	}
 
 	@Override

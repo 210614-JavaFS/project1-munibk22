@@ -4,75 +4,52 @@ import java.awt.image.BufferedImage;
 import java.sql.Date;
 import java.util.Arrays;
 
-public class Reimbursement{
+public class Reimbursement {
 	private int reimbursementId;
 	private int amount;
 	private String rDescription;
 	private int author;
 	private int resolver;
-	private int rStatus;	
-	private int rIntType;
+
 	private String empId;
-	private byte[] imgHolder;	
+	private byte[] imgHolder;
 
 	private String rType;
 	private String status;
-
 	private String timeStamp;
 
 	private String dateCreated;
 	private String userName;
 	private String firstName;
-	
+	private String userRole;
+
 //	private Employee employee;;
-	
+
 	public String getUserName() {
 		return userName;
 	}
-
 
 	public String getFirstName() {
 		return firstName;
 	}
 
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-
 	public Reimbursement() {
 		super();
 	}
 
-
 //	BufferedImage image = null;
-	public int getrIntType() {
-		return rIntType;
-	}
-
-	public void setrIntType(int rIntType) {
-		this.rIntType = rIntType;
-	}
-
-	
-
-	public int getrStatus() {
-		return rStatus;
-	}
-
-	
 
 	public byte[] getImgHolder() {
 		return imgHolder;
 	}
-
-
 
 	public void setImgHolder(byte[] imgHolder) {
 		this.imgHolder = imgHolder;
@@ -110,22 +87,9 @@ public class Reimbursement{
 		this.dateCreated = dateCreated;
 	}
 
-
-
-
-
-
-
-
-	public int isrStatus() {
-		return rStatus;
-	}
-
 	public int getAmount() {
 		return amount;
 	}
-
-
 
 	public String getrDescription() {
 		return rDescription;
@@ -139,15 +103,9 @@ public class Reimbursement{
 //		return image;
 //	}
 
-	public void setrStatus(int rStatus) {
-		this.rStatus = rStatus;
-	}
-
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-
-
 
 	public void setrDescription(String rDescription) {
 		this.rDescription = rDescription;
@@ -163,10 +121,10 @@ public class Reimbursement{
 
 	@Override
 	public String toString() {
-		return "Reimbursement [reimbursementId=" + reimbursementId + ", amount=" + amount + ", rDescription="+empId
-				+ rDescription +", img=" + imgHolder +", author=" + author + ", resolver=" + resolver + ", rStatus=" + rStatus  + ", rType=" +  rIntType + ", dateCreated=" + dateCreated + "]";
+		return "Reimbursement [reimbursementId=" + reimbursementId + ", amount=" + amount + ", rDescription=" + empId
+				+ rDescription + ", img=" + imgHolder + ", author=" + author + ", resolver=" + resolver + ", userRole="
+				+ userRole + ", dateCreated=" + dateCreated + "]";
 	}
-
 
 	/**
 	 * @return the empId
@@ -175,14 +133,12 @@ public class Reimbursement{
 //		return empId;
 //	}
 
-
 	/**
 	 * @param empId the empId to set
 	 */
 	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
-
 
 	/**
 	 * @return the rType
@@ -191,14 +147,12 @@ public class Reimbursement{
 		return rType;
 	}
 
-
 	/**
 	 * @param string the rType to set
 	 */
 	public void setrType(String rType) {
 		this.rType = rType;
 	}
-
 
 	/**
 	 * @return the status
@@ -207,14 +161,12 @@ public class Reimbursement{
 		return status;
 	}
 
-
 	/**
 	 * @param status the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -226,8 +178,6 @@ public class Reimbursement{
 		result = prime * result + ((empId == null) ? 0 : empId.hashCode());
 		result = prime * result + Arrays.hashCode(imgHolder);
 		result = prime * result + ((rDescription == null) ? 0 : rDescription.hashCode());
-		result = prime * result + rIntType;
-		result = prime * result + rStatus;
 		result = prime * result + ((rType == null) ? 0 : rType.hashCode());
 		result = prime * result + reimbursementId;
 		result = prime * result + resolver;
@@ -235,7 +185,6 @@ public class Reimbursement{
 		result = prime * result + ((timeStamp == null) ? 0 : timeStamp.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -266,16 +215,12 @@ public class Reimbursement{
 			if (other.rDescription != null)
 				return false;
 		} else if (!rDescription.equals(other.rDescription))
-			return false;
-		if (rIntType != other.rIntType)
-			return false;
-		if (rStatus != other.rStatus)
-			return false;
-		if (rType == null) {
-			if (other.rType != null)
+
+			if (rType == null) {
+				if (other.rType != null)
+					return false;
+			} else if (!rType.equals(other.rType))
 				return false;
-		} else if (!rType.equals(other.rType))
-			return false;
 		if (reimbursementId != other.reimbursementId)
 			return false;
 		if (resolver != other.resolver)
@@ -291,27 +236,35 @@ public class Reimbursement{
 		} else if (!timeStamp.equals(other.timeStamp))
 			return false;
 		return true;
-	
 
-
-	/**
-	 * @return the employee
-	 */
+		/**
+		 * @return the employee
+		 */
 //	public Employee getEmployee() {
 //		return employee;
 //	}
 
-
-	/**
-	 * @param employee the employee to set
-	 */
+		/**
+		 * @param employee the employee to set
+		 */
 //	public void setEmployee(Employee employee) {
 //		this.employee = employee;
 //	}}
-	
-	
-	
+
 	}
-	
+
+	/**
+	 * @return the userRole
+	 */
+	public String getUserRole() {
+		return userRole;
+	}
+
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
 
 }

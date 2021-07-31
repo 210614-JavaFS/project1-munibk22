@@ -6,7 +6,7 @@ public class Employee extends Character {
 //	private String lastName;
 //	private String userName;
 //	private String email;
-	public static int empId;
+	private static int empId;
 	
 
 	

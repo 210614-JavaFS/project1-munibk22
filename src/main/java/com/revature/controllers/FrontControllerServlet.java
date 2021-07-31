@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class FrontControllerServlet extends HttpServlet {
 	private static EmployeeController employeeController = new EmployeeController();
-	private static ReimbursementController reimbursementController = new ReimbursementController(); 
+	private static ReimbursementController reimbursementController = new ReimbursementController();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,20 +50,39 @@ public class FrontControllerServlet extends HttpServlet {
 			employeeController.addImage(request, response);
 			break;
 		case "reimbursements":
-		employeeController.getReimbursements(request, response);
-		break;
+			reimbursementController.getReimbursements(request, response);
+			break;
 		case "login":
 			employeeController.login(request, response);
 			break;
 		case "pasttickets":
-			reimbursementController.pasttickets(request,response);
+			reimbursementController.pasttickets(request, response);
 			break;
 		case "pending":
-			reimbursementController.pendingRequests(request,response);
-		break;
+			reimbursementController.pendingRequests(request, response);
+			break;
 		case "approvals":
-		reimbursementController.approvalRequests(request,response);
-		break;
+			if (UrlSections.length == 1) {
+				if (request.getMethod().equals("GET")) {
+					reimbursementController.approvalRequests(request, response);
+					break;
+				} else if (request.getMethod().equals("POST")) {
+					reimbursementController.approveStatus(request, response);
+					break;
+				} 
+			}else if (UrlSections.length == 2) {
+				reimbursementController.denyStatus(request, response);
+				break;
+			}
+			break;
+
+		case "approvestatus":
+			reimbursementController.approveStatus(request, response);
+			break;
+		case "denystatus":
+			reimbursementController.denyStatus(request, response);
+			break;
+
 		}
 
 	}
