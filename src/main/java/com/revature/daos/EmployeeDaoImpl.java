@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.revature.models.Employee;
 import com.revature.models.ImageTest;
 import com.revature.models.Reimbursement;
@@ -77,15 +79,41 @@ public class EmployeeDaoImpl extends Employee implements EmployeeDAO {
 
 	}
 
+//	@Override
+//	public boolean updateReimbursement(Employee employee) {
+//		String sql ="UPDATE ers_users \n"
+//				+ "SET password = " +employee.getPassword();
+//		return false;
+//	}
+
+	
 	@Override
-	public boolean updateReimbursement(Employee employee) {
-		// TODO Auto-generated method stub
+	public boolean updatePw() {
+		System.out.println("Updating DAo");
+		String password="password";
+		String hashedPw = BCrypt.hashpw("password", BCrypt.gensalt());
+		
+	try(Connection conn =ConnectionUtil.getConnection()) {
+		String sql ="UPDATE ers_users \n"
+				+ "SET password = crypt('password', gen_salt('bf', 8))" + " \n"
+						+ "WHERE EMP_ID = 11;";
+		PreparedStatement statement = conn.prepareStatement(sql);
+		
+//		+hashedPw 
+		statement.executeQuery();
+		return true;
+		
+	} catch (Exception e) {
+		System.out.println("did not update");
+		e.printStackTrace();
+	}
 		return false;
 	}
-
+	
 	@Override
 	public boolean insertImage(ImageTest image) {
 		String sql = "INSERT INTO imageholder(image) Values(?)";
+		
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -245,9 +273,11 @@ public class EmployeeDaoImpl extends Employee implements EmployeeDAO {
 	}
 
 	@Override
-	public boolean login() {
+	public boolean updateReimbursement(Employee employee) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }

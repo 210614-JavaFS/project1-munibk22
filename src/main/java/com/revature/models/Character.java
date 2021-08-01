@@ -1,28 +1,23 @@
 package com.revature.models;
 
-import java.sql.Date;
+import org.mindrot.jbcrypt.BCrypt;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class Character {
-	
+
 //	public  int empId;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private int userRoleId;
-//	private String confirmPass;
-private String userRole;
-
+	private String userRole;
 	private Reimbursement reimbursement;
 
 //	private String timeStamp;
 
-
 	private String password;
-
+	private String hashedPw= BCrypt.hashpw(password, BCrypt.gensalt()) ;
 
 	// No arg Constructor
 	public Character() {
@@ -32,7 +27,7 @@ private String userRole;
 	// Args Constructor
 	public Character(String userName, String firstName, String lastName, String password) {
 		super();
-				this.firstName = firstName;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
@@ -42,7 +37,32 @@ private String userRole;
 //	public int getEmpId() {
 //		return empId;
 //	}
+	public boolean checkPw(String pw) {
+		if(BCrypt.checkpw(pw, hashedPw)) {
+			System.out.println("password match");
+			return true;
+		}else {
+			System.out.println("password does not match");
+			return false;
+		}
+		
+	}
 
+	
+	public String getHashedPw() {
+		return hashedPw;
+	}
+
+	public void setPassword(String password) {
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+	}
+
+	
+
+	public void setHashedPw(String hashedPw) {
+		this.hashedPw = hashedPw;
+	}
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -95,22 +115,19 @@ private String userRole;
 		this.userRoleId = userRoleId;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
 
 //	public void setPassConfirm(String passConfirm) {
 //		this.passConfirm = passConfirm;
 //	}
 
-	
-
 	@Override
 	public String toString() {
-		return "Character [ userName=" + userName + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId +userRole+ ", password=" + password + "]";
+		return "Character [ userName=" + userName + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
+				+ email + ", userRoleId=" + userRoleId + userRole + ", password=" + password +hashedPw+ "]";
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -189,9 +206,6 @@ private String userRole;
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
-
-
-
 
 	// Getters N Setters
 

@@ -17,13 +17,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
 import com.revature.models.ImageTest;
-import com.revature.models.LoginModel;
 import com.revature.models.Reimbursement;
 import com.revature.services.EmployeeService;
+import com.revature.utils.Bcrypt;
 
 public class EmployeeController {
 
@@ -34,6 +33,7 @@ public class EmployeeController {
 	private boolean loggedIn = false;
 	private HttpSession session;
 //	public  Employee employee = new Employee();
+	
 
 	public void showAllEmployees(HttpServletResponse response) throws IOException {
 
@@ -61,10 +61,11 @@ public class EmployeeController {
 		}
 		String body = new String(stringBuilder);
 
-		LoginModel loginModel = objectMapper.readValue(body, LoginModel.class);
+//		Bcrypt bcrypt = objectMapper.readValue(body, Bcrypt.class);
+		Employee employee = objectMapper.readValue(body, Employee.class);
 
-		Employee employee = empService.getByUserName(loginModel.getUserName());
-
+		 employee = empService.getByUserName(employee.getUserName());
+		 System.out.println("password "+ employee.getPassword()+employee.getHashedPw() );
 		String json = objectMapper.writeValueAsString(employee);
 		PrintWriter pw = response.getWriter();
 
@@ -73,12 +74,13 @@ public class EmployeeController {
 		response.getWriter().print(json);
 		System.out.println(body);
 		
-		log.info("loginmodel password " + loginModel.getPassword());
+		log.info("loginmodel password " + employee.getPassword());
 	
 
 		try {
 
-			if (employee.getFirstName() != null && employee.getPassword().equals(loginModel.getPassword())) {
+
+			if(employee.checkPw(employee.getPassword())) {
 				response.setStatus(200);
 				session = req.getSession();
 				session.setAttribute("username", employee.getUserName());
@@ -188,6 +190,34 @@ System.out.println("Adding ticket");
 			System.out.println("Error in inserting image");
 		}
 
+	}
+
+	public void updatePassword(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException  {
+		System.out.println("Updating password");
+		BufferedReader reader = request.getReader();
+		StringBuilder stringBuilder = new StringBuilder();
+
+		String line = reader.readLine();
+		
+
+//		while (line != null) {
+//			stringBuilder.append(line);
+//			line = reader.readLine();
+//		}
+//		String body = new String(stringBuilder);
+//		
+//		Bcrypt bcrypt = objectMapper.readValue(body, Bcrypt.class);
+//		System.out.println(bcrypt);
+//		(empService.updatePw()
+		if (empService.updatePw()) {
+			response.setStatus(201);
+			log.info("Successfully added reimbursement");
+		
+		}
+		
+		
+		
+		
 	}
 
 

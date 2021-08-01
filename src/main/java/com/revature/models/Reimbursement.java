@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import java.awt.image.BufferedImage;
-import java.sql.Date;
+
 import java.util.Arrays;
 
 public class Reimbursement {
@@ -237,19 +237,6 @@ public class Reimbursement {
 			return false;
 		return true;
 
-		/**
-		 * @return the employee
-		 */
-//	public Employee getEmployee() {
-//		return employee;
-//	}
-
-		/**
-		 * @param employee the employee to set
-		 */
-//	public void setEmployee(Employee employee) {
-//		this.employee = employee;
-//	}}
 
 	}
 

@@ -82,7 +82,10 @@ public class FrontControllerServlet extends HttpServlet {
 		case "denystatus":
 			reimbursementController.denyStatus(request, response);
 			break;
-
+		case"update":
+			
+			employeeController.updatePassword(request, response);
+break;
 		}
 
 	}

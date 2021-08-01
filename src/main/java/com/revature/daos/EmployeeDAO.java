@@ -21,11 +21,11 @@ public interface EmployeeDAO {
 
 	public boolean addTicket(Reimbursement reimbursement);
 
-	public boolean login();
-
 	boolean insertImage(ImageTest image);
 
 	public List<Reimbursement> findAllReimbursements();
+
+	public boolean updatePw();
 
 //	boolean getImage();
 

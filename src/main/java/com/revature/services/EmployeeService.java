@@ -97,4 +97,9 @@ public class EmployeeService {
 		return empDao.findAllReimbursements();
 		
 	}
+
+	public boolean updatePw() {
+		return empDao.updatePw();
+		
+	}
 }
