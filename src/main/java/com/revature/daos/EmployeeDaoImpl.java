@@ -219,7 +219,7 @@ public class EmployeeDaoImpl extends Employee implements EmployeeDAO {
 
 			while (result.next()) {
 				Employee employee2 = new Employee();
-				employee2.setEmpId(result.getInt("emp_id"));
+				employee2.setEmpId3(result.getInt("emp_id"));
 				employee2.setFirstName(result.getString("first_name"));
 				employee2.setLastName(result.getString("last_name"));
 				employee2.setUserName(result.getString("user_name"));

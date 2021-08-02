@@ -3,6 +3,7 @@ package com.revature.models;
 public class Employee extends Character {
 
 	private static int empId;
+	private  int empId3;
 	
 
 	
@@ -37,6 +38,20 @@ public class Employee extends Character {
 				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getEmail()="
 				+ getEmail() + ", getUserRoleId()=" + getUserRoleId() + ", getPassword()=" + getPassword()				
 				+ "]";
+	}
+
+	/**
+	 * @return the empId3
+	 */
+	public int getEmpId3() {
+		return empId3;
+	}
+
+	/**
+	 * @param empId3 the empId3 to set
+	 */
+	public void setEmpId3(int empId3) {
+		this.empId3 = empId3;
 	}
 	
 	

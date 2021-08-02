@@ -42,6 +42,7 @@ public class EmployeeController {
 			String json = objectMapper.writeValueAsString(employeeList);
 
 			log.info("Retrival was successful");
+			System.out.println(json);
 			PrintWriter pw = response.getWriter();
 			pw.print(json);
 
