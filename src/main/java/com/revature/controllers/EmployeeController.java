@@ -41,13 +41,14 @@ public class EmployeeController {
 
 			String json = objectMapper.writeValueAsString(employeeList);
 
-			System.out.println(json);
+			log.info("Retrival was successful");
 			PrintWriter pw = response.getWriter();
 			pw.print(json);
 
 			response.setStatus(200);
 
 		} catch (Exception e) {
+			log.warn("Retrival was not successful");
 			response.setStatus(400);
 			e.printStackTrace();
 		}
@@ -81,10 +82,10 @@ public class EmployeeController {
 
 		log.info("loginmodel password " + employee.getPassword());
 
-//		try {
+		try {
 
-//			if(employee.checkPw(employee.getPassword())) {
-//			if(employee.checkPw("password") ) {
+			if(employee.checkPw(employee.getPassword())) {
+
 		response.setStatus(200);
 		session = req.getSession();
 		session.setAttribute("username", employee.getUserName());
@@ -92,19 +93,19 @@ public class EmployeeController {
 		System.out.println("new session started");
 
 		return true;
-//			} else {
+			} else {
 //				RequestDispatcher reqDispatch = req.getRequestDispatcher(json);
 //				reqDispatch.include(req, response);
-//				log.warn("Invalid user name or password");
-//				System.out.println("Invalid user name or password");
-//					pw.print("<div style='color:red; text-align:center'>Invalid user name or password</div>");
-//				return false;
-//			}
+				log.warn("Invalid user name or password");
+				System.out.println("Invalid user name or password");
+					pw.print("<div style='color:red; text-align:center'>Invalid user name or password</div>");
+				return false;
+			}
 
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 
 	}
 
