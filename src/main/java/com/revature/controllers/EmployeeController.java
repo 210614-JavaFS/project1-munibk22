@@ -84,7 +84,7 @@ public class EmployeeController {
 
 		try {
 
-			if(employee.checkPw(employee.getPassword())) {
+			if(employee.getPassword().equals(employee.getPassword())) {
 
 		response.setStatus(200);
 		session = req.getSession();

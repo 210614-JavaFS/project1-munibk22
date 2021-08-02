@@ -181,8 +181,8 @@ public class EmployeeDaoImpl extends Employee implements EmployeeDAO {
 
 	@Override
 	public boolean addTicket(Reimbursement reimbursement) {
-		String sql = "INSERT INTO ers_reimbursement(reimb_amount, reimb_description, reimb_author,"
-				+ "reimb_type_id, reimb_reciept)" + "values(?,?,?,?,?)";
+		String sql = "INSERT INTO ers_reimbursement(reimb_amount, reimb_description,reimb_author, reimb_type_id)"
+				+ "values(?,?,?,?)";
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -190,9 +190,9 @@ public class EmployeeDaoImpl extends Employee implements EmployeeDAO {
 
 			statement.setInt(++index, reimbursement.getAmount());
 			statement.setString(++index, reimbursement.getrDescription());
-			statement.setInt(++index, getEmpId());
+			statement.setInt(++index, reimbursement.getAuthor());
 			statement.setInt(++index, reimbursement.getReimbursementId());
-			statement.setBytes(++index, reimbursement.getImgHolder());
+//			statement.setBytes(++index, reimbursement.getImgHolder());
 
 			statement.execute();
 			return true;
