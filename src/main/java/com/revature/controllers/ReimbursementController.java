@@ -31,12 +31,9 @@ public class ReimbursementController extends Employee {
 
 	public void pasttickets(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		List<Reimbursement> reimbursementList = reimbService.getPastTickets();
-		System.out.println("getEmpId 2=" + getEmpId2());
+		List<Reimbursement> reimbursementList = reimbService.getPastTickets();		
 
-		System.out.println("getEmpId 2=" + getEmpId2());
-
-		System.out.println("pasttickets connected!!");
+		log.info("pasttickets connected!!");
 
 		String json = objectMapper.writeValueAsString(reimbursementList);
 

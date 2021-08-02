@@ -13,7 +13,7 @@ public class Reimbursement {
 
 	private String empId;
 	private byte[] imgHolder;
-
+	private int empId2;
 	private String rType;
 	private String status;
 	private String timeStamp;
@@ -126,12 +126,7 @@ public class Reimbursement {
 				+ userRole + ", dateCreated=" + dateCreated + " ,timeStamp"+timeStamp+"]";
 	}
 
-	/**
-	 * @return the empId
-	 */
-//	public int getEmpId(empId) {
-//		return empId;
-//	}
+	
 
 	/**
 	 * @param empId the empId to set
@@ -252,6 +247,22 @@ public class Reimbursement {
 	 */
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
+	}
+
+	
+
+	/**
+	 * @return the empId2
+	 */
+	public int getEmpId2() {
+		return empId2;
+	}
+
+	/**
+	 * @param empId2 the empId2 to set
+	 */
+	public void setEmpId2(int empId2) {
+		this.empId2 = empId2;
 	}
 
 }
