@@ -12,8 +12,8 @@ public interface ReimbursementDAO {
 
 	public List<Reimbursement> findAllApprovals();
 
-	public boolean approveStatus(int rId);
+	public boolean approveStatus(int rId, Reimbursement reimbursement);
 
-	boolean denyStatus(int rId);
+	boolean denyStatus(int rId, Reimbursement reimbursement);
 
 }

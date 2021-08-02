@@ -2,10 +2,9 @@ package com.revature.models;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-
 public abstract class Character {
 
-//	public  int empId;
+	public int empId;
 	private String userName;
 	private String firstName;
 	private String lastName;
@@ -17,7 +16,7 @@ public abstract class Character {
 //	private String timeStamp;
 
 	private String password;
-	private String hashedPw= BCrypt.hashpw(password, BCrypt.gensalt()) ;
+	private String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
 
 	// No arg Constructor
 	public Character() {
@@ -34,21 +33,21 @@ public abstract class Character {
 
 	}
 
-//	public int getEmpId() {
-//		return empId;
-//	}
+	public int getEmpId() {
+		return empId;
+	}
+
 	public boolean checkPw(String pw) {
-		if(BCrypt.checkpw(pw, hashedPw)) {
+		if (BCrypt.checkpw(pw, hashedPw)) {
 			System.out.println("password match");
 			return true;
-		}else {
+		} else {
 			System.out.println("password does not match");
 			return false;
 		}
-		
+
 	}
 
-	
 	public String getHashedPw() {
 		return hashedPw;
 	}
@@ -57,12 +56,10 @@ public abstract class Character {
 		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
-	
-
 	public void setHashedPw(String hashedPw) {
 		this.hashedPw = hashedPw;
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -87,13 +84,10 @@ public abstract class Character {
 		return password;
 	}
 
-//	public String getPassConfirm() {
-//		return passConfirm;
-//	}
 
-//	public void setEmpId(int empId) {
-//		this.empId = empId;
-//	}
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -123,10 +117,27 @@ public abstract class Character {
 //		this.passConfirm = passConfirm;
 //	}
 
+	
+
+	/**
+	 * @return the userRole
+	 */
+	public String getUserRole() {
+		return userRole;
+	}
+
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
 	@Override
 	public String toString() {
-		return "Character [ userName=" + userName + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", userRoleId=" + userRoleId + userRole + ", password=" + password +hashedPw+ "]";
+		return "Character [empId=" + empId + ", userName=" + userName + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", email=" + email + ", userRoleId=" + userRoleId + ", userRole=" + userRole
+				+ ", reimbursement=" + reimbursement + ", password=" + password + ", hashedPw=" + hashedPw + "]";
 	}
 
 	@Override
@@ -134,7 +145,9 @@ public abstract class Character {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + empId;
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((hashedPw == null) ? 0 : hashedPw.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((reimbursement == null) ? 0 : reimbursement.hashCode());
@@ -158,10 +171,17 @@ public abstract class Character {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (empId != other.empId)
+			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (hashedPw == null) {
+			if (other.hashedPw != null)
+				return false;
+		} else if (!hashedPw.equals(other.hashedPw))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -193,20 +213,6 @@ public abstract class Character {
 		return true;
 	}
 
-	/**
-	 * @return the userRole
-	 */
-	public String getUserRole() {
-		return userRole;
-	}
 
-	/**
-	 * @param userRole the userRole to set
-	 */
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
-
-	// Getters N Setters
 
 }

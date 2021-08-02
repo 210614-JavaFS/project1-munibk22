@@ -25,7 +25,7 @@ public interface EmployeeDAO {
 
 	public List<Reimbursement> findAllReimbursements();
 
-	public boolean updatePw();
+	public boolean updatePw(Employee employee);
 
 //	boolean getImage();
 

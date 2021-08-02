@@ -98,8 +98,8 @@ public class EmployeeService {
 		
 	}
 
-	public boolean updatePw() {
-		return empDao.updatePw();
+	public boolean updatePw(Employee employee) {
+		return empDao.updatePw(employee);
 		
 	}
 }

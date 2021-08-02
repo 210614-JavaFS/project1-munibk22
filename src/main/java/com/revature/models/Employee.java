@@ -2,10 +2,6 @@ package com.revature.models;
 
 public class Employee extends Character {
 
-//	private String firstName;
-//	private String lastName;
-//	private String userName;
-//	private String email;
 	private static int empId;
 	
 

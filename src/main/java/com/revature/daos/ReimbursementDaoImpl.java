@@ -15,7 +15,7 @@ public class ReimbursementDaoImpl extends Employee implements ReimbursementDAO {
 	@Override
 	public List<Reimbursement> findPastTickets() {
 
-		String sql = "SELECT reib.reimb_id ,emp.user_name, emp.first_name,reib.REIMB_ID ticketnumber,reib.REIMB_AMOUNT ,reib.REIMB_SUBMITTED ,status.REIMB_STATUS \r\n"
+		String sql = "SELECT reib.*, reib.reimb_id, reib.reimb_resolver, emp.user_name, emp.first_name,reib.REIMB_ID ticketnumber,reib.REIMB_AMOUNT ,reib.REIMB_SUBMITTED ,status.REIMB_STATUS \r\n"
 				+ ",reib.reimb_description, reib.reimb_submitted, to_char(reimb_submitted ,'MON-DD-YY')\r\n"
 				+ "FROM ERS_USERS emp\r\n" + "JOIN ERS_REIMBURSEMENT reib \r\n" + "ON emp.emp_id=reib.REIMB_AUTHOR \r\n"
 				+ "JOIN ERS_REIMBURSEMENT_STATUS status \r\n" + "ON reib.REIMB_STATUS_ID =status.REIMB_STATUS_ID \r\n"
@@ -35,6 +35,7 @@ public class ReimbursementDaoImpl extends Employee implements ReimbursementDAO {
 				Reimbursement reimbursement = new Reimbursement();
 
 				reimbursement.setReimbursementId(result.getInt("REIMB_ID"));
+				reimbursement.setResolver(result.getInt("reimb_resolver"));
 				reimbursement.setAmount(result.getInt("REIMB_AMOUNT"));
 				reimbursement.setAuthor(getEmpId2());
 				reimbursement.setrDescription(result.getString("reimb_description"));
@@ -42,7 +43,7 @@ public class ReimbursementDaoImpl extends Employee implements ReimbursementDAO {
 				reimbursement.setStatus(result.getString("REIMB_STATUS"));
 				reimbursement.setUserName(result.getString("user_name"));
 				reimbursement.setDateCreated(result.getString("reimb_submitted"));
-
+				reimbursement.setTimeStamp(result.getString("reimb_resolveds"));
 				rList.add(reimbursement);
 			}
 
@@ -151,17 +152,18 @@ public class ReimbursementDaoImpl extends Employee implements ReimbursementDAO {
 	}
 
 	@Override
-	public boolean approveStatus(int rId) {		
+	public boolean approveStatus(int rId, Reimbursement reimbursement) {		
 		String sql ="UPDATE ERS_REIMBURSEMENT \n"
 				+ "SET reimb_status_id = 1, \n"
-				+ "reimb_author = "+ 9 +" \n"
+				+ "reimb_resolveds = '"+reimbursement.getTimeStamp()+ "',\n"
+				+ "reimb_resolver = " + reimbursement.getResolver() +" \n"
 				+ "WHERE reimb_id = "+rId;
 				
 				
 		try(Connection conn=ConnectionUtil.getConnection()){
 			Statement statement = conn.createStatement();
 			
-			statement.executeQuery(sql);
+			statement.execute(sql);
 			System.out.println("Approved request from req DAO");
 			return true;
 			
@@ -175,10 +177,11 @@ public class ReimbursementDaoImpl extends Employee implements ReimbursementDAO {
 
 	
 	@Override
-	public boolean denyStatus(int rId) {		
+	public boolean denyStatus(int rId, Reimbursement reimbursement) {		
 		String sql ="UPDATE ERS_REIMBURSEMENT \n"
 				+ "SET reimb_status_id = 3, \n"
-				+ "reimb_author = "+ 9 +" \n"
+				+ " reimb_resolveds = "+reimbursement.getTimeStamp()+ ",\n"				
+				+ "reimb_resolver = "+ reimbursement.getResolver() +" \n"
 				+ "WHERE reimb_id = "+rId;
 				
 				

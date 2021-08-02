@@ -33,23 +33,28 @@ public class EmployeeController {
 	private boolean loggedIn = false;
 	private HttpSession session;
 //	public  Employee employee = new Employee();
-	
 
 	public void showAllEmployees(HttpServletResponse response) throws IOException {
 
-		List<Employee> employeeList = empService.getAllEmployees();
+		try {
+			List<Employee> employeeList = empService.getAllEmployees();
 
-		String json = objectMapper.writeValueAsString(employeeList);
+			String json = objectMapper.writeValueAsString(employeeList);
 
-		System.out.println(json);
-		PrintWriter pw = response.getWriter();
-		pw.print(json);
+			System.out.println(json);
+			PrintWriter pw = response.getWriter();
+			pw.print(json);
 
-		response.setStatus(200);
+			response.setStatus(200);
+
+		} catch (Exception e) {
+			response.setStatus(400);
+			e.printStackTrace();
+		}
 	}
 
 	public boolean login(HttpServletRequest req, HttpServletResponse response) throws IOException, ServletException {
-	
+
 		BufferedReader reader = req.getReader();
 		StringBuilder stringBuilder = new StringBuilder();
 
@@ -64,44 +69,42 @@ public class EmployeeController {
 //		Bcrypt bcrypt = objectMapper.readValue(body, Bcrypt.class);
 		Employee employee = objectMapper.readValue(body, Employee.class);
 
-		 employee = empService.getByUserName(employee.getUserName());
-		 System.out.println("password "+ employee.getPassword()+employee.getHashedPw() );
+		employee = empService.getByUserName(employee.getUserName());
+		System.out.println("password " + employee.getPassword() + " hased pasword" + employee.getHashedPw());
 		String json = objectMapper.writeValueAsString(employee);
 		PrintWriter pw = response.getWriter();
 
-		System.out.println("employee.getEmpId() =" +employee.getEmpId2());
+		System.out.println("employee.getEmpId() =" + employee.getEmpId2());
 		System.out.println(employee);
 		response.getWriter().print(json);
 		System.out.println(body);
-		
+
 		log.info("loginmodel password " + employee.getPassword());
-	
 
-		try {
+//		try {
 
+//			if(employee.checkPw(employee.getPassword())) {
+//			if(employee.checkPw("password") ) {
+		response.setStatus(200);
+		session = req.getSession();
+		session.setAttribute("username", employee.getUserName());
+		log.info(employee.getUserName() + " was logged in");
+		System.out.println("new session started");
 
-			if(employee.checkPw(employee.getPassword())) {
-				response.setStatus(200);
-				session = req.getSession();
-				session.setAttribute("username", employee.getUserName());
-				log.info(employee.getUserName()+" was logged in");
-				System.out.println("new session started");
-;
-
-				return true;
-			} else {
+		return true;
+//			} else {
 //				RequestDispatcher reqDispatch = req.getRequestDispatcher(json);
 //				reqDispatch.include(req, response);
-				log.warn("Invalid user name or password");
-				System.out.println("Invalid user name or password");
+//				log.warn("Invalid user name or password");
+//				System.out.println("Invalid user name or password");
 //					pw.print("<div style='color:red; text-align:center'>Invalid user name or password</div>");
-				return false;
-			}
+//				return false;
+//			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return false;
 
 	}
 
@@ -116,17 +119,16 @@ public class EmployeeController {
 			line = reader.readLine();
 		}
 		String body = new String(stringBuilder);
-		Employee employee2 = objectMapper.readValue(body, Employee.class);			
-					
-				PrintWriter pw = response.getWriter();
+		Employee employee2 = objectMapper.readValue(body, Employee.class);
 
-					
+		PrintWriter pw = response.getWriter();
+
 		if (empService.addEmployee(employee2)) {
 			response.setStatus(201);
-			String json = objectMapper.writeValueAsString(employee2);			
+			String json = objectMapper.writeValueAsString(employee2);
 //			PrinterWriter pw = response.getWriter();
 			pw.print(json);
-			
+
 			return true;
 		} else {
 			response.setStatus(406);
@@ -137,7 +139,7 @@ public class EmployeeController {
 
 	public boolean addTicket(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-System.out.println("Adding ticket");
+		System.out.println("Adding ticket");
 		BufferedReader reader = request.getReader();
 		StringBuilder stringBuilder = new StringBuilder();
 
@@ -192,34 +194,29 @@ System.out.println("Adding ticket");
 
 	}
 
-	public void updatePassword(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException  {
+	public void updatePassword(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		System.out.println("Updating password");
 		BufferedReader reader = request.getReader();
 		StringBuilder stringBuilder = new StringBuilder();
 
 		String line = reader.readLine();
-		
 
-//		while (line != null) {
-//			stringBuilder.append(line);
-//			line = reader.readLine();
-//		}
-//		String body = new String(stringBuilder);
-//		
-//		Bcrypt bcrypt = objectMapper.readValue(body, Bcrypt.class);
-//		System.out.println(bcrypt);
+		while (line != null) {
+			stringBuilder.append(line);
+			line = reader.readLine();
+		}
+		String body = new String(stringBuilder);
+
+		Employee employee = objectMapper.readValue(body, Employee.class);
+		System.out.println(employee);
 //		(empService.updatePw()
-		if (empService.updatePw()) {
+		if (empService.updatePw(employee)) {
 			response.setStatus(201);
 			log.info("Successfully added reimbursement");
-		
+
 		}
-		
-		
-		
-		
+
 	}
-
-
 
 }

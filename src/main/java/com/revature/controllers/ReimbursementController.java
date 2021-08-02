@@ -95,12 +95,13 @@ public class ReimbursementController extends Employee {
 		String body = new String(stringBuilder);
 
 		Reimbursement reimbursement = objectMapper.readValue(body, Reimbursement.class);
-
+		System.out.println(body);
+		System.out.println(reimbursement);
 		int rId = reimbursement.getReimbursementId();
 		System.out.println(rId);
 
 		try {
-			if (reimbService.approveStatus(rId)) {
+			if (reimbService.approveStatus(rId,reimbursement)) {
 				response.setStatus(200);
 				log.info("Status successfully updated");
 			}
@@ -129,7 +130,7 @@ public class ReimbursementController extends Employee {
 		int rId = reimbursement.getReimbursementId();
 		System.out.println("Deny iD: "+rId);
 		try {
-			if (reimbService.denyStatus(rId)) {
+			if (reimbService.denyStatus(rId,reimbursement)) {
 				response.setStatus(200);
 				log.info("Status Deny successfully updated");
 			}

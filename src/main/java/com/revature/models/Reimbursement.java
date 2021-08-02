@@ -123,7 +123,7 @@ public class Reimbursement {
 	public String toString() {
 		return "Reimbursement [reimbursementId=" + reimbursementId + ", amount=" + amount + ", rDescription=" + empId
 				+ rDescription + ", img=" + imgHolder + ", author=" + author + ", resolver=" + resolver + ", userRole="
-				+ userRole + ", dateCreated=" + dateCreated + "]";
+				+ userRole + ", dateCreated=" + dateCreated + " ,timeStamp"+timeStamp+"]";
 	}
 
 	/**
