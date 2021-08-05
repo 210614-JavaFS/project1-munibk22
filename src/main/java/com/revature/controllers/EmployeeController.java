@@ -72,9 +72,12 @@ public class EmployeeController {
 		Employee employee = objectMapper.readValue(body, Employee.class);
 
 		employee = empService.getByUserName(employee.getUserName());
+		System.out.println("password " + employee.getPassword() + " hased pasword" + employee.getHashedPw());
 		String json = objectMapper.writeValueAsString(employee);
 		PrintWriter pw = response.getWriter();
 
+		System.out.println("employee.getEmpId() =" + employee.getEmpId2());
+		System.out.println(employee);
 		response.getWriter().print(json);
 		System.out.println(body);
 
@@ -82,7 +85,7 @@ public class EmployeeController {
 
 		try {
 
-			if(employee.getHashedPw().equals(employee.checkPw(employee.getPassword()))) {
+			if(employee.getPassword().equals(employee.getPassword())) {
 
 		response.setStatus(200);
 		session = req.getSession();

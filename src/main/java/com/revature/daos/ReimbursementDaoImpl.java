@@ -180,7 +180,7 @@ public class ReimbursementDaoImpl extends Employee implements ReimbursementDAO {
 	public boolean denyStatus(int rId, Reimbursement reimbursement) {		
 		String sql ="UPDATE ERS_REIMBURSEMENT \n"
 				+ "SET reimb_status_id = 3, \n"
-				+ " reimb_resolveds = "+reimbursement.getTimeStamp()+ ",\n"				
+				+ " reimb_resolveds = '"+reimbursement.getTimeStamp()+ "',\n"				
 				+ "reimb_resolver = "+ reimbursement.getResolver() +" \n"
 				+ "WHERE reimb_id = "+rId;
 				
