@@ -18,9 +18,12 @@ public class SuccessServlet extends HttpServlet {
 
 		res.setContentType("aapliction/json");
 		PrintWriter pw = res.getWriter();
+		System.out.println("Testing success ervlet");
+		System.out.println("Testing success ervlet");
 
 		if (session == null) {
 			pw.print("<h1>You are not Logged In!!</h1>");
+			System.out.println("Testing success ervlet");
 		} else {
 //			String username = (String) session.getAttribute("username");
 
