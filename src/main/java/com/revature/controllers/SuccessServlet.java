@@ -25,6 +25,7 @@ public class SuccessServlet extends HttpServlet {
 //			String username = (String) session.getAttribute("username");
 
 //			String username = req.getParameter("userId");
+			System.out.println("Testing success ervlet");
 			pw.print("<h2>Welcome, you have successfully logged in!</h2>");
 
 			pw.print("<a href='logout'>Click here to logout!</a>");
